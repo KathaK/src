@@ -55,7 +55,7 @@ def teardown_request(exception):
 def show_all_songs():
     if session.get("logged_in") == True:
         cur = g.db.execute('select title, artist, genre from songs order by id desc')
-        songs = [dict(title=row[0], artist=row[1], genre=row[2]) for now in cur.fetchall()]
+        songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in cur.fetchall()]
         return render_template('songs.html', songs=songs)
     else:
         return render_template("login.html")
@@ -78,7 +78,7 @@ def login():
 def logout():
     session.pop('logged_in', None)
     flash('You are now logged out')
-    return redirect(url_for('login')
+    return redirect(url_for('login'))
 # Chap.3.3 test for user logged in failed, so redirect to login url
 
 # simple search: only matches when the searchterm is exactly matched!
@@ -89,14 +89,14 @@ def search():
     songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
-@app.route('/artist', methods = ["GET","POST"]
+@app.route('/artist', methods = ["GET","POST"])
 def artist():
     artist = request.args["artist"]
     cur = g.db.execute("select title, artist, genre from songs where artist = ?", [artist])
     songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
-@app.route('/genre', methods = ["GET","POST"]
+@app.route('/genre', methods = ["GET","POST"])
 def genre():
     genre = request.args["genre"]
     cur = g.db.execute("select title, artist, genre from songs where genre = ?", [genre])
@@ -107,6 +107,6 @@ def genre():
 def page_not_found(error):
     return "Couldn't find the requested page - 404"
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     app.run()
 
