@@ -2,7 +2,8 @@ from sqlite3 import dbpi2 as sqlite3
 from contextlib import closing
 
 # Create an application
-from flask import Flask, url_for, request, render_template, redirect, g
+from flask import Flask, url_for, request, render_template, redirect, g,
+session, flash
 
 DATABASE = 'data/songs.db'
 DEBUG = True #set debug=False before publishing
@@ -57,10 +58,22 @@ def show_all_songs():
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    error = None
+    if request.method == "POST":
+        if request.form["username"] == app.config["USERNAME"] and \
+           request.form["password"] == app.config["PASSWORD"]:
+              session['login_in'] = True
+              flash("You are now logged in as " + app.config["USERNAME"] + ".")
+              return redirect(url_for("show_all_songs"))
+        else:
+            error = "Invalid user credentials!"
+    return render_template("login.html", error=error)
 
-@app.rpute('/logout')
+
+@app.route('/logout')
 def logout():
+    session.pop('logged_in', None)
+    flash('You are now logged out')
     return redirect(url_for('login')
 # Chap.3.3 test for user logged in failed, so redirect to login url
 
