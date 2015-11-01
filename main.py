@@ -11,7 +11,7 @@ USERNAME = 'admin'
 PASSWORD = 'default'
 
 app = Flask(__name__)
-app.config.from_object(__name__) 
+app.config.from_object(__name__)
 #all uppercase variables defined will be added to config
 
 #connect to database
@@ -41,7 +41,7 @@ def get_db():
         g.sqlite_db = connect_db()
     return g.sqlite_db
 
-@abb.before_request
+@app.before_request
 def before_request():
     g.db = connect_db() 
 #g: flask object for one request
@@ -81,5 +81,5 @@ def page_not_found(error):
     return "Couldn't find the requested page - 404"
 
 if __name__ == "__main__"
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
 
