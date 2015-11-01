@@ -99,6 +99,11 @@ def artist():
 
 @app.route('/genre', methods = ["GET","POST"]
 def genre():
+    genre = request.args["genre"]
+    cur = g.db.execute("select title, artist, genre from songs where genre =
+    ?", [genre])
+    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in
+    cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
 @app.errorhandler(404)
