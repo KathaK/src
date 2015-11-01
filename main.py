@@ -54,7 +54,14 @@ def teardown_request(exception):
 
 @app.route("/")
 def show_all_songs():
-    return render_template('songs.html')
+    if session.get("logged_in") == True:
+        cur = g.db.execute('select title, artist, genre from songs oder by id
+        desc')
+        songs = [dict(title=row[0], artist=row[1], genre=row[2]) for now in
+        cur.fetchall()]
+        return render_template('songs.html', songs=songs)
+    else:
+        return render_template("login.html")
 
 @app.route('/login')
 def login():
