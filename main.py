@@ -84,8 +84,14 @@ def logout():
     return redirect(url_for('login')
 # Chap.3.3 test for user logged in failed, so redirect to login url
 
+#simple search: only matches when the searchterm is exactly matched!
 @app.route('/search', methods=["GET", "POST"])
-def songs():
+def search():
+    s = request.args["searchterm"]
+    cur = g.db.execute("select title, artist, genre from songs where (title = ?
+    or artist = ? or genre = ?)", [s,s,s])
+    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in
+    cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
 @app.route('/artist', methods = ["GET","POST"]
