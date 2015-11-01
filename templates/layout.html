@@ -2,41 +2,37 @@
 <title>Music@Napier</title>
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
 <div class="title">
-    <h1>- Welcome to Music@Napier -</h1>
+    <h1>Welcome to Music@Napier</h1>
     <div class="metanav">
     {% if not session.logged_in %}
+
       <a href="{{ url_for('login') }}"> Login </a>
     {% else %}
+      <a href="{{ url_for('show_all_songs') }}"> Overview </a>
       <a href="{{ url_for('logout') }}"> Logout </a>
       <ul class="songs">
-      <table style="width:100%">
-          <tr>
-              <td>
-                  <form action="{{ url_for('artist') }}" method="get">
-                      <dl>
-                          <dd><input type="text" name="artist">
-                          <dd><input type="submit" value="Filter by artist">
-                      </dl>
-                  </form>
-              </td>
-              <td>
-                  <form action="{{ url_for('genre') }}" method="get">
-                      <dl>
-                          <dd><input type="text" name="genre">
-                          <dd><input type="submit" value="Filter by genre">
-                      </dl>
-                  </form>
-              </td>
-              <td>
-                  <form action="{{ url_for('search') }}" method="get">
-                      <dl>
-                          <dd><input type="text" name="searchterm">
-                          <dd><input type="submit" value="Search">
-                      </dl>
-                  </form>
-              </td>
-          </tr>
-      </table>
+
+      <form action="{{ url_for('artist') }}" method="get">
+        <dl>
+          <dd><input type="text" name="artist">
+          <dd><input type="submit" value="Filter by artist">
+        </dl>
+      </form>
+
+      <form action="{{ url_for('genre') }}" method="get">
+        <dl>
+          <dd><input type="text" name="genre">
+          <dd><input type="submit" value="Filter by genre">
+        </dl>
+      </form>
+
+      <form action="{{ url_for('search') }}" method="get">
+        <dl>
+          <dd><input type="text" name="searchterm">
+          <dd><input type="submit" value="Search">
+        </dl>
+      </form>
+
   {% endif %}
   </div>
 
