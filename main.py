@@ -33,8 +33,7 @@ def init_db():
             line = line.rstrip("\n")
             print(line.split("-"))
             title, artist, genre = line.split('-')
-            db.execute("insert into songs (title, artist, genre) values
-            (?,?,?)", [title,artist,genre])
+            db.execute("insert into songs (title, artist, genre) values (?,?,?)", [title,artist,genre])
         db.commit()
 
 def get_db():
@@ -55,10 +54,8 @@ def teardown_request(exception):
 @app.route("/")
 def show_all_songs():
     if session.get("logged_in") == True:
-        cur = g.db.execute('select title, artist, genre from songs oder by id
-        desc')
-        songs = [dict(title=row[0], artist=row[1], genre=row[2]) for now in
-        cur.fetchall()]
+        cur = g.db.execute('select title, artist, genre from songs oder by id desc')
+        songs = [dict(title=row[0], artist=row[1], genre=row[2]) for now in cur.fetchall()]
         return render_template('songs.html', songs=songs)
     else:
         return render_template("login.html")
@@ -88,28 +85,22 @@ def logout():
 @app.route('/search', methods=["GET", "POST"])
 def search():
     s = request.args["searchterm"]
-    cur = g.db.execute("select title, artist, genre from songs where (title = ?
-    or artist = ? or genre = ?)", [s,s,s])
-    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in
-    cur.fetchall()]
+    cur = g.db.execute("select title, artist, genre from songs where (title = ? or artist = ? or genre = ?)", [s,s,s])
+    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
 @app.route('/artist', methods = ["GET","POST"]
 def artist():
     artist = request.args["artist"]
-    cur = g.db.execute("select title, artist, genre from songs where artist =
-    ?", [artist])
-    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in
-    cur.fetchall()]
+    cur = g.db.execute("select title, artist, genre from songs where artist = ?", [artist])
+    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
 @app.route('/genre', methods = ["GET","POST"]
 def genre():
     genre = request.args["genre"]
-    cur = g.db.execute("select title, artist, genre from songs where genre =
-    ?", [genre])
-    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in
-    cur.fetchall()]
+    cur = g.db.execute("select title, artist, genre from songs where genre = ?", [genre])
+    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
 @app.errorhandler(404)
@@ -117,5 +108,5 @@ def page_not_found(error):
     return "Couldn't find the requested page - 404"
 
 if __name__ == "__main__"
-    app.run(host='0.0.0.0')
+    app.run()
 
