@@ -1,9 +1,9 @@
-from sqlite3 import dbpi2 as sqlite3
+from sqlite3 import dbapi2 as sqlite3
+
 from contextlib import closing
 
 # Create an application
-from flask import Flask, url_for, request, render_template, redirect, g,
-session, flash
+from flask import Flask, url_for, request, render_template, redirect, g, session, flash
 
 DATABASE = 'data/songs.db'
 DEBUG = True #set debug=False before publishing
@@ -13,9 +13,9 @@ PASSWORD = 'default'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-#all uppercase variables defined will be added to config
+# all uppercase variables defined will be added to config
 
-#connect to database
+# connect to database
 def connect_db():
     return sqlite3.connect(app.config["DATABASE"])
 
@@ -44,7 +44,7 @@ def get_db():
 @app.before_request
 def before_request():
     g.db = connect_db() 
-#g: flask object for one request
+# g: flask object for one request
 
 @app.teardown_request
 def teardown_request(exception):
@@ -54,19 +54,19 @@ def teardown_request(exception):
 @app.route("/")
 def show_all_songs():
     if session.get("logged_in") == True:
-        cur = g.db.execute('select title, artist, genre from songs oder by id desc')
+        cur = g.db.execute('select title, artist, genre from songs order by id desc')
         songs = [dict(title=row[0], artist=row[1], genre=row[2]) for now in cur.fetchall()]
         return render_template('songs.html', songs=songs)
     else:
         return render_template("login.html")
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         if request.form["username"] == app.config["USERNAME"] and \
            request.form["password"] == app.config["PASSWORD"]:
-              session['login_in'] = True
+              session['logged_in'] = True
               flash("You are now logged in as " + app.config["USERNAME"] + ".")
               return redirect(url_for("show_all_songs"))
         else:
@@ -81,7 +81,7 @@ def logout():
     return redirect(url_for('login')
 # Chap.3.3 test for user logged in failed, so redirect to login url
 
-#simple search: only matches when the searchterm is exactly matched!
+# simple search: only matches when the searchterm is exactly matched!
 @app.route('/search', methods=["GET", "POST"])
 def search():
     s = request.args["searchterm"]
