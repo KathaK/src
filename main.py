@@ -90,6 +90,11 @@ def songs():
 
 @app.route('/artist', methods = ["GET","POST"]
 def artist():
+    artist = request.args["artist"]
+    cur = g.db.execute("select title, artist, genre from songs where artist =
+    ?", [artist])
+    songs = [dict(title=row[0], artist=row[1], genre=row[2]) for row in
+    cur.fetchall()]
     return render_template('songs.html', songs=songs)
 
 @app.route('/genre', methods = ["GET","POST"]
