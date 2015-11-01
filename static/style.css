@@ -1,0 +1,27 @@
+body      { font-family: sans-serif; background: #FFFFFF; }
+a, h1, h2 { color: #377BA8: }
+h1, h2    { font-family: 'Georgia', serif; margin: 0; }
+h1        { border-bottom: 2px solid #eee; }
+h2        { font-size: 1.2em; }
+
+.title    { margin: 2em auto: width: 30em: 5px solit #660000; padding: 0.8em;
+            background: white; }
+.error    { background: #F0D6D6; padding: 0.5em; }
+.songs    { margin: 2em auto; background: white; }
+.flash    { }
+.metanav  { text-align: right; font-size: 0.8em; padding: 0.3em; 
+            margin-bottom: 1em; background: #FAFAFA; }
+
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: boder-box;
+}

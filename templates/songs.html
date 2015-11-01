@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+    <ul class="songs">
+    <table style="width=100%">
+        <tr>
+            <td><h2>Title</h2></td>
+            <td><h2>Artist</h2></td>
+            <td><h2>Genre</h2></td>
+        </tr>
+    {% for song in songs %}
+        <tr>
+            <td>{{ song.title }}</td>
+            <td>{{ song.artist }}</td>
+            <td>{{ song.genre }}</td>
+        </tr>
+    {% else %}
+        <li><em>There are no songs :(</em>
+    {% endfor %}
+    </table>
+    </ul>
+{% endblock %}
