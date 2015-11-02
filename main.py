@@ -108,5 +108,5 @@ def page_not_found(error):
     return "Couldn't find the requested page - 404"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
 
